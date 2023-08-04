@@ -1,10 +1,7 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-Vue.use(VueRouter)
-
-const routes: Array<RouteConfig> = [
+const routes = [
   {
     path: '/',
     name: 'home',
@@ -20,9 +17,8 @@ const routes: Array<RouteConfig> = [
   }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: '/main/vue2/',
+const router = createRouter({
+  history: createWebHashHistory(),
   routes
 })
 

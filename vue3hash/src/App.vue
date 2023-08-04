@@ -1,11 +1,9 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">HomeNew - VUE2</router-link> |
-      <router-link to="/about">About - VUE2</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <nav>
+    <router-link to="/">Vue3Hash - Home</router-link> |
+    <router-link to="/about">Vue3Hash - About</router-link>
+  </nav>
+  <router-view/>
 </template>
 
 <style lang="less">

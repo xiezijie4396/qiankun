@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">HomeNew - VUE2</router-link> |
-      <router-link to="/about">About - VUE2</router-link>
+      <router-link to="/">Vue2Hash - Home</router-link> |
+      <router-link to="/about">Vue2Hash - About</router-link>
     </nav>
     <router-view/>
   </div>
