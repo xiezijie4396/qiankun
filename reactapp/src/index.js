@@ -10,7 +10,7 @@ function render(props) {
   instance = ReactDOM.createRoot(container ? container.querySelector('#react') : document.querySelector('#react'))
   instance.render(
     <React.StrictMode>
-      <App />
+      <App props={props} />
     </React.StrictMode>
   );
 }

@@ -1,11 +1,18 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import routes from './router'
 import store from './store'
+import { createRouter, createWebHistory } from 'vue-router'
 
 let instance: any = null;
-function render(props: IContainer = {} as IContainer) {
+let router: any = null;
+function render(props: any) {
+    console.log(process.env)
     const container: any = props.container;
+    router = createRouter({
+        history: createWebHistory(window.__POWERED_BY_QIANKUN__ ? props.activeRule : process.env.BASE_URL),
+        routes
+    })
     instance = createApp(App).use(store).use(router)
     instance.mount(container ? container.querySelector('#app') : '#app')
 }
@@ -16,7 +23,7 @@ if (window.__POWERED_BY_QIANKUN__) {
   
 // 独立运行时
 if (!window.__POWERED_BY_QIANKUN__) {
-    render();
+    render({});
 }
 
 export async function bootstrap() {
@@ -29,4 +36,5 @@ export async function mount(props: IContainer) {
 export async function unmount() {
     instance.unmount();
     instance = null;
+    router = null;
 }

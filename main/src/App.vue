@@ -3,7 +3,7 @@
     这里是主体哦
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/vue2/">vue2</router-link> |
+      <router-link to="/vue2">vue2</router-link> |
       <router-link to="/vue3/">vue3</router-link> |
       <router-link to="/react/">react</router-link> |
       <router-link to="/default/">default</router-link> |
@@ -11,12 +11,7 @@
       <router-link to="/vue3hash/">vue3hash</router-link>
     </nav>
     <router-view />
-    <div id="vue2"></div>
-    <div id="vue3"></div>
-    <div id="react"></div>
-    <div id="default"></div>
-    <div id="vue2hash"></div>
-    <div id="vue3hash"></div>
+    <div id="container"></div>
   </div>
 </template>
 

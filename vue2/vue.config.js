@@ -3,7 +3,7 @@ const packageName = require('./package.json').name
 const path = require('path')
 
 module.exports = defineConfig({
-  publicPath: '/main/vue2/',
+  publicPath: process.env.BASEURL,
   transpileDependencies: true,
   configureWebpack: {
     output: {
@@ -17,5 +17,5 @@ module.exports = defineConfig({
       'Access-Control-Allow-Origin': '*' // 主应用获取子应用时跨域响应头
     }
   },
-  outputDir: path.join('../server/vue2')
+  outputDir: path.join('../server/child/vue2')
 })

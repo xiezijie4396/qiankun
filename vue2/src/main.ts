@@ -1,18 +1,24 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
+import routes from './router';
 import store from './store';
+import VueRouter from 'vue-router'
 
 Vue.config.productionTip = false;
 
 if (window.__POWERED_BY_QIANKUN__) {
-  __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ + 'vue2/';
+  __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;
 }
 
 let instance: any = null;
-function render(props: IContainer = {} as IContainer) {
+let router: any = null;
+function render(props: any) {
   const container: any = props.container;
-
+  router = new VueRouter({
+    mode: 'history',
+    base: window.__POWERED_BY_QIANKUN__ ? props.activeRule : process.env.BASE_URL,
+    routes
+  })
   instance = new Vue({
     router,
     store,
@@ -22,7 +28,7 @@ function render(props: IContainer = {} as IContainer) {
 
 // 独立运行时
 if (!window.__POWERED_BY_QIANKUN__) {
-  render();
+  render({});
 }
 
 export async function bootstrap() {
@@ -36,4 +42,5 @@ export async function unmount() {
   instance.$destroy();
   instance.$el.innerHTML = '';
   instance = null;
+  router = null;
 }

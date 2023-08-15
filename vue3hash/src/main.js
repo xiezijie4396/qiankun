@@ -1,11 +1,17 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import routes from './router'
 import store from './store'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 let instance;
+let router;
 function render(props) {
     const container = props.container;
+    router = createRouter({
+        history: createWebHashHistory(window.__POWERED_BY_QIANKUN__ ? props.activeRule : process.env.BASE_URL),
+        routes
+    })
     instance = createApp(App).use(store).use(router)
     instance.mount(container ? container.querySelector('#app') : '#app')
 }
@@ -17,7 +23,7 @@ if (window.__POWERED_BY_QIANKUN__) {
   
 // 独立运行时
 if (!window.__POWERED_BY_QIANKUN__) {
-    render();
+    render({});
 }
 
 export async function bootstrap() {

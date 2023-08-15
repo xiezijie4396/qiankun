@@ -4,7 +4,6 @@ import About from './components/About';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 
 function createRouter(baseUrl) {
-  console.log(baseUrl) // => /react
   return <Router basename="/">
     <Link to="/">Home</Link> |  <Link to={`${baseUrl}/about`}>About</Link>
     <Routes>
@@ -15,8 +14,8 @@ function createRouter(baseUrl) {
   </Router>
 }
 
-function App() {
-  return createRouter('/react');
+function App(props) {
+  return createRouter(props.props.activeRule);
 }
 
 export default App;

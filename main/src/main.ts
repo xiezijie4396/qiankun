@@ -4,13 +4,21 @@ import router from './router'
 import store from './store'
 import { registerMicroApps, start } from 'qiankun';
 import getRegisterApp from './register'
+const isDev = !(process.env.NODE_ENV === 'production')
 
-console.log(getRegisterApp())
-registerMicroApps((getRegisterApp()))
+const registerArr = getRegisterApp()
+registerMicroApps(registerArr)
 
 Vue.config.productionTip = false
 
-start()
+start({
+  // 本地开发时，禁用预加载，防止因其他项目未启动而导致的报错
+  prefetch: isDev ? false : true,
+  // prefetch: false,
+  sandbox: {
+    experimentalStyleIsolation: true
+  }
+})
 
 new Vue({
   router,

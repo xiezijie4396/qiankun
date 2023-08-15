@@ -16,8 +16,9 @@ let instance = null;
 function render(props = {}) {
   const container = props.container;
   router = new VueRouter({
+    base: window.__POWERED_BY_QIANKUN__ ? props.activeRule : process.env.BASE_URL,
     mode: 'hash',
-    routes: routes.options.routes,
+    routes: routes,
   });
 
   instance = new Vue({

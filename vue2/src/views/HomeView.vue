@@ -1,18 +1,24 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <div>这里是Vue2，此时count：{{ count }}</div>
+    <button @click="add">点击这里新增count</button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 export default Vue.extend({
   name: 'HomeView',
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      count: 0
+    }
   },
+  methods: {
+    add() {
+      this.count++
+    }
+  }
 });
 </script>

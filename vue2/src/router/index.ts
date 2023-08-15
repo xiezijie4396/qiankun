@@ -20,10 +20,4 @@ const routes: Array<RouteConfig> = [
   }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: '/main/vue2/',
-  routes
-})
-
-export default router
+export default routes
