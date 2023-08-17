@@ -11,46 +11,35 @@
       <router-link to="/vue3hash/">vue3hash</router-link> -->
     </nav>
     <router-view />
-    <div id="container-vue2" v-show="$route.path.includes('/vue2/')"></div>
-    <div id="container-vue3" v-show="$route.path.includes('/vue3/')"></div>
+    <div id="container-vue2" v-show="$route.path.includes('/vue2')"></div>
+    <div id="container-vue3" v-show="$route.path.includes('/vue3')"></div>
   </div>
 </template>
 
 <script>
-import { loadMicroApp } from 'qiankun';
+import { registerMicroApps, start } from 'qiankun';
+import getRegisterApp from './register'
 
-const apps = [
-  {
-    name: 'vue2', // app name registered
-    entry: '//localhost:8001/child/vue2/',
-    container: '#container-vue2',
-    props: {
-      activeRule: '/main/vue2'
-    }
-  },
-  {
-    name: 'vue3', // app name registered
-    entry: '//localhost:8002/child/vue3/',
-    container: '#container-vue3',
-    props: {
-      activeRule: '/main/vue3'
-    }
-  },
-]
+const loadedApplicationMap = new Map()
 
 export default {
   mounted() {
-    // 优先加载当前的子项目
-    const path = this.$route.path;
-    const currentAppIndex = apps.findIndex(item => path.includes(item.name));
-    if(currentAppIndex !== -1){
-      const currApp = apps.splice(currentAppIndex, 1)[0];
-      apps.unshift(currApp);
-    }
-    // loadMicroApp 返回值是 app 的生命周期函数数组
-    const loadApps = apps.map(item => loadMicroApp(item))
-    // 当 tab 页关闭时，调用 loadApps 中 app 的 unmount 函数即可
-    console.log(loadApps)
+    const isDev = !(process.env.NODE_ENV === 'production')
+    const registerArr = getRegisterApp().map(item => {
+      item.props.loadedApplicationMap = loadedApplicationMap
+      return item
+    })
+    registerMicroApps(registerArr)
+
+    start({
+      // 本地开发时，禁用预加载，防止因其他项目未启动而导致的报错
+      prefetch: isDev ? false : true,
+      // prefetch: false,
+      sandbox: {
+        experimentalStyleIsolation: true
+      }
+    })
+
   }
 }
 

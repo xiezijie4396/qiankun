@@ -7,14 +7,33 @@ import { createRouter, createWebHistory } from 'vue-router'
 let instance: any = null;
 let router: any = null;
 function render(props: any) {
-    console.log(process.env)
-    const container: any = props.container;
-    router = createRouter({
-        history: createWebHistory(window.__POWERED_BY_QIANKUN__ ? props.activeRule : process.env.BASE_URL),
-        routes
-    })
-    instance = createApp(App).use(store).use(router)
-    instance.mount(container ? container.querySelector('#app') : '#app')
+    if (window.__POWERED_BY_QIANKUN__) {
+        const { container, loadedApplicationMap }: any = props;
+        let vnodeInstance: any = null
+        if (loadedApplicationMap.has(props.name)) {
+            vnodeInstance = loadedApplicationMap.get(props.name)
+        }
+        if (vnodeInstance) {
+            console.log(vnodeInstance)
+            vnodeInstance.mount(container.querySelector('#app'))
+        } else {
+            router = createRouter({
+                history: createWebHistory(props.activeRule),
+                routes
+            })
+            instance = createApp(App)
+            instance.use(store).use(router).mount(container.querySelector('#app'))
+            vnodeInstance = instance
+            loadedApplicationMap.set(props.name, vnodeInstance)
+        }
+    } else {
+        router = createRouter({
+            history: createWebHistory(process.env.BASE_URL),
+            routes
+        })
+        instance = createApp(App).use(store).use(router)
+        instance.mount('#app')
+    }
 }
 
 if (window.__POWERED_BY_QIANKUN__) {
@@ -35,6 +54,7 @@ export async function mount(props: IContainer) {
 }
 export async function unmount() {
     instance.unmount();
-    instance = null;
-    router = null;
+    // instance = null;
+    // delete instance.config.globalProperties
+    // router = null;
 }

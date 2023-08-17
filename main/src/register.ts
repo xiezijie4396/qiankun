@@ -30,7 +30,7 @@ const list = [
     },
     {
         name: 'vue2-app', // app name registered
-        container: '#container',
+        container: '#container-vue2',
         props: {
             devEntry: `//localhost:8001/child/vue2/`,
             proEntry: `/child/vue2/`,
@@ -39,7 +39,7 @@ const list = [
     },
     {
         name: 'vue3-app', // app name registered
-        container: '#container',
+        container: '#container-vue3',
         props: {
             devEntry: `//localhost:8002/child/vue3/`,
             proEntry: `/child/vue3/`,
